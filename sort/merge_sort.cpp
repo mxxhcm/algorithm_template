@@ -6,9 +6,9 @@
 // 最大可以取到两百万
 const int N = 10000;
 int a[N] = {0};
-// 100万，0.1秒左右
+// 100万，0.2秒左右
 // 10万，0.02左右
-// 1万，0.003左右
+// 1万，0.004左右
 
 
 // Merges two subarrays of arr[]. 
@@ -71,18 +71,15 @@ void mergeData(int arr[], int l, int m, int r)
    sub-array of arr to be sorted */
 void mergeSort(int arr[], int l, int r) 
 { 
-    if (l < r) 
-    { 
-        // Same as (l+r)/2, but avoids overflow for 
-        // large l and h 
-        int m = l+(r-l)/2; 
-  
-        // Sort first and second halves 
-        mergeSort(arr, l, m); 
-        mergeSort(arr, m+1, r); 
-  
-        mergeData(arr, l, m, r); 
-    } 
+    if(l < r)
+    {
+        //int middle = (l+r)/2 may be overflow, use (r-l)/2 + l 
+        int m = (r-l)/2 + l;
+        mergeSort(a, l, m);
+        mergeSort(a, m+1, r);
+        mergeData(a, l , m, r);
+    }
+
 } 
 void merge(int a[], int l, int m, int r)
 {
@@ -163,8 +160,7 @@ int main()
     for(int i = 0 ; i < N; i++)
     {
         a[i] = rand();
-        break;
-        printf("%d\n", a[i]);
+        //printf("%d\n", a[i]);
     }
     printf("============inputs end===============\n");
 

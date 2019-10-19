@@ -3,7 +3,7 @@
 #include<ctime>
 #include<sys/time.h>
 
-const int N = 10000;
+const int N = 1000000;
 // 10万,8.9
 // 1万，0.13
 
@@ -84,8 +84,7 @@ int main()
     for(int i = 0 ; i < N; i++)
     {
         a[i] = rand();
-        break;
-        printf("%d\n", a[i]);
+        //printf("%d\n", a[i]);
     }
     printf("============inputs end===============\n");
 
