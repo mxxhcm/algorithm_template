@@ -4,86 +4,17 @@
 #include<sys/time.h>
 
 // 最大可以取到两百万
-const int N = 10000;
+const int N = 1000000;
 int a[N] = {0};
 // 100万，0.2秒左右
 // 10万，0.02左右
 // 1万，0.004左右
 
-
-// Merges two subarrays of arr[]. 
-// First subarray is arr[l..m] 
-// Second subarray is arr[m+1..r] 
-void mergeData(int arr[], int l, int m, int r) 
-{ 
-    int i, j, k; 
-    int n1 = m - l + 1; 
-    int n2 =  r - m; 
-  
-    /* create temp arrays */
-    int L[n1], R[n2]; 
-  
-    /* Copy data to temp arrays L[] and R[] */
-    for (i = 0; i < n1; i++) 
-        L[i] = arr[l + i]; 
-    for (j = 0; j < n2; j++) 
-        R[j] = arr[m + 1+ j]; 
-  
-    /* Merge the temp arrays back into arr[l..r]*/
-    i = 0; // Initial index of first subarray 
-    j = 0; // Initial index of second subarray 
-    k = l; // Initial index of merged subarray 
-    while (i < n1 && j < n2) 
-    { 
-        if (L[i] <= R[j]) 
-        { 
-            arr[k] = L[i]; 
-            i++; 
-        } 
-        else
-        { 
-            arr[k] = R[j]; 
-            j++; 
-        } 
-        k++; 
-    } 
-  
-    /* Copy the remaining elements of L[], if there 
-       are any */
-    while (i < n1) 
-    { 
-        arr[k] = L[i]; 
-        i++; 
-        k++; 
-    } 
-  
-    /* Copy the remaining elements of R[], if there 
-       are any */
-    while (j < n2) 
-    { 
-        arr[k] = R[j]; 
-        j++; 
-        k++; 
-    } 
-} 
-  
-/* l is for left index and r is right index of the 
-   sub-array of arr to be sorted */
-void mergeSort(int arr[], int l, int r) 
-{ 
-    if(l < r)
-    {
-        //int middle = (l+r)/2 may be overflow, use (r-l)/2 + l 
-        int m = (r-l)/2 + l;
-        mergeSort(a, l, m);
-        mergeSort(a, m+1, r);
-        mergeData(a, l , m, r);
-    }
-
-} 
 void merge(int a[], int l, int m, int r)
 {
-    int res[100] = { 0 };
+    //注意！！！不用声明N的临时数组即可。
+    //int res[N] = { 0 };
+    int res[r-l+1] = { 0 };
     int i = l, j = m+1, k = 0;
     // merge
     while((i <= m) && (j <= r))
@@ -126,14 +57,14 @@ void merge_sort(int a[], int l, int r)
         merge_sort(a, l, m);
         merge_sort(a, m+1, r);
         merge(a, l , m, r);
+        //mergeData(a, l , m, r);
     }
 
 }
 
 void sort(int a[], int n)
 {
-    //merge_sort(a, 0, n-1);
-    mergeSort(a, 0, n-1);
+    merge_sort(a, 0, n-1);
 }
 
 int main()

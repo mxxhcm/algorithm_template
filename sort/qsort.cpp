@@ -3,7 +3,7 @@
 #include<ctime>
 #include<sys/time.h>
 
-const int N = 10000;
+const int N = 1000000;
 
 int partition(int a[], int low, int high)
 {

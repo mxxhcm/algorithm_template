@@ -1,7 +1,6 @@
 #include <cstdio>
 #include <cstdlib>
 
-
 struct ListNode{
     int val;
     ListNode *next;
