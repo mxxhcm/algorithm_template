@@ -1,30 +1,10 @@
-#include<cstdio>
-#include<cstdlib>
-#include<ctime>
-#include<sys/time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/time.h>
 
 
-void insert_sort(int a[], int n)
-{
-    int temp = -1;
-    int i = - 1,j = -1;
-    for(i = 1; i < n; i++)
-    {
-        temp = a[i];
-        for(j = i-1; j >=0; j --)
-        {
-            if(temp < a[j])
-            {
-                a[j+1] = a[j];
-            }
-            else
-            {
-                break;
-            }
-        }
-        a[j+1] = temp;
-    }
-}
+#include "sort.h"
 
 
 int main()
@@ -54,6 +34,8 @@ int main()
     struct timeval tv1, tv2;
     gettimeofday(&tv1, NULL);
     insert_sort(array, N);
+     
+
     gettimeofday(&tv2, NULL);
     printf("run time: %f\n", (double)(tv2.tv_sec-tv1.tv_sec) + (double)(tv2.tv_usec - tv1.tv_usec)/1000000);
 

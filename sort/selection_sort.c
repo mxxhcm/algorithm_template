@@ -1,7 +1,11 @@
-#include<cstdio>
-#include<cstdlib>
+#include "sort.h"
 
-
+/*
+ *
+ *
+ * 选择排序
+ *
+ */
 void selection_sort(int a[], int n)
 {
     for(int i = 0; i < n - 1; i++)
@@ -21,16 +25,3 @@ void selection_sort(int a[], int n)
     }
 }
 
-
-int main()
-{
-    int a[100] = {29, 394, 56, 30, 340, 29, 49};
-    int l = 7;
-    selection_sort(a, l);
-    for(int i = 0; i < l; i++)
-    {
-        printf("%d,", a[i]);
-    }
-    printf("\n");
-    
-}
