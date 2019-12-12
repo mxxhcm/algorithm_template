@@ -21,19 +21,53 @@ void print_token_strsep(char *line, const char *delim)
     
 }
 
+// return char *res[],
 void split_strtok(char *line, const char *delim, char ***res)
 {
+    char *token = strtok(line, delim); 
+    printf("token: %s\n", token);
 
+    while((token = strtok(NULL, delim) != NULL))
+    {
+        printf("token: %s\n", token);
+    }
 
 }
 
-
-void split_strsep(char *line, const char *delim, char ***res)
+void create_char_pointer_array(char **ppc, int size)
 {
+    char **res = (char**)realloc(ppc, sizeof(char*) *size);
+    return res;
+}
+
+void split_strsep(char *line, const char *delim, char ***res, int *n, int remove_white)
+{
+    if(*res == NULL)
+    {
+        *n = 16;
+        create_char_pointer_array(*res, *n); 
+    }
+
+    if(remove_white != 0)
+        remove_white(line);
+    char *token;
+    int count = 0;
+    while((token = strsep(line, delim)) != NULL)
+    {
+        printf("%s\n", token);
+        char *p = (char*)malloc(sizeof(token));
+        count ++;
+        if(count >= *n)
+        {
+            *n = *n*2; 
+            create_char_pointer_array(*res, *n); 
+        }
+        *res[]
+    }
 
 }
 
-void remove_duplicate_white(char *line)
+void remove_white(char *line)
 {
     int n = strlen(line);
     int count = 0;

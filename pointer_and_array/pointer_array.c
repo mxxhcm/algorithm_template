@@ -4,13 +4,14 @@
 #define ARRAY_SIZE 10
 #define ARRAY_NUM 10
 
-void sort_pointer_array(int **array, int n)
+
+int cmp_array(const void *a, const void *b)
 {
-    qsort(array, n, sizeof(int*), cmp_pointer_array);
+    return (*(int*)a - *(int*)b);
 }
 
 
-void sort_array(int *array, int n)
+void sort_array(int *array, const int n)
 {
     qsort(array, n, sizeof(int), cmp_array);
 }
@@ -22,28 +23,29 @@ int cmp_pointer_array(const void *a, const void *b)
 }
 
 
-int cmp_array(const void *a, const void *b)
+void sort_pointer_array(int **array, const int n)
 {
-    return (*(int*)a - *(int*)b);
+    qsort(array, n, sizeof(int*), cmp_pointer_array);
 }
 
 
-void print_array(int *array, int n)
+
+void print_array(const int *array, const int n)
 {
     
-    for(int *p = array; p != array+n; ++p)
+    for(const int *p = array; p != array+n; ++p)
     {
         printf("%d, ", *p);
     }
     printf("\n");
 }
 
-void print_pointer_array(int **array, int n, int *size)
+void print_pointer_array(const int **array, const int n, const int *size)
 {
-    for(int **p = array; p!=array+n; ++p, ++size)
+    for(const int **p = array; p!=array+n; ++p, ++size)
     {
         printf("size = %d:\n", *size);
-        for(int *temp = *p; temp != *p+*size; ++temp)
+        for(const int *temp = *p; temp != *p+*size; ++temp)
         {
             printf("%d,", *temp);
         }
@@ -51,109 +53,31 @@ void print_pointer_array(int **array, int n, int *size)
     }
 }
 
-int** creat_pointer_array(int *n, int **size)
+void creat_int_pointer(int **ppi, const int n)
 {
-    if(*n == 0)
-    {
-        *n = ARRAY_NUM;
-    }
-    int **array = (int**)malloc((*n) *sizeof(int*));
-    
-    // size是一个指向int的指针的指针
-    // *size 是一个指向int的指针
-    *size = (int*)malloc(sizeof(int)*10);
-    //int *array[n];
-    
-    int count = 0;
-    int *s = *size;
-    for(int **ppi = array; ppi!= array+*n; ++ppi, ++s)
-    {
-        *s = ARRAY_SIZE;
-        *ppi = (int*)malloc(ARRAY_SIZE *sizeof(int));
-        for(int *temp = *ppi; temp!= *ppi+*s; ++temp)
-        {
-            *temp = ++count;
-        }
-    }
- 
-    return array;
+    int *pi = (int*)realloc(*ppi, sizeof(int)*n);
+    *ppi = pi;
 }
 
-int *creat_array(int *n)
+void creat_char_pointer(char **ppc, const int n)
 {
-    if(*n == 0)
-    {
-        *n = ARRAY_SIZE;
-    }
-
-    int seed = 0;
-    srand(seed);
-
-    int *array = (int *)malloc((*n)*sizeof(int));
-    int count = 0;
-
-    for(int *pa = array; pa !=array+*n; ++pa)
-    {
-        *pa = rand() % 100;
-    }
-
-    return array;
+    char *pc = (char*)realloc(*ppc, sizeof(char)*n);
+    *ppc = pc;
 }
 
-int** merge(int** intervals, int intervalsSize, int* intervalsColSize, int* returnSize, int** returnColumnSizes){
 
-    if(intervalsSize == 0)
+void creat_char_pointer_array(char ***ppca, const int n, const int *l)
+{
+    // realloc指针数组
+    char **pca = (char**)realloc(*ppca, sizeof(char*) * n);
+
+    // realloc指针数组中每个指针
+    for(int i = 0; i < n; ++i)
     {
-        *returnSize = 0;
-        *returnColumnSizes = NULL;
-        return NULL;
+        creat_char_pointer(&pca[i], l[i]);
     }
-        
-    // sort pointer array
-    qsort(intervals, intervalsSize, sizeof(int*), cmp_pointer_array);
-    
-    *returnSize = intervalsSize;    // size of return array 
-    *returnColumnSizes = (int*)malloc(*returnSize*sizeof(int)); // size list of pointer array
-    int **array = (int**)malloc(intervalsSize * sizeof(int*));    // pointer array
-    
-    int count = 0;
-    int interval_l = 2;
-    int *temp;
-    temp = (int*)malloc(sizeof(int)*interval_l);   
-    *(*returnColumnSizes+count) = 2;
-    array[count++] = temp;
-    *temp = *(*intervals);  // temp is a pointer to int
-    *(temp+1) = *(*intervals+1);    // temp+1 is a pointer to int
-    
-    int last_end = temp[1];
-    
-    for(int i = 1 ; i < intervalsSize; ++i)
-    {
-        int begin = intervals[i][0];
-        int end = intervals[i][1];
-        if(begin > last_end)
-        {
-            temp = (int*)malloc(sizeof(int)*interval_l);
-            *(*returnColumnSizes+count) = 2;
-            array[count]  = temp;
-            array[count][0] = begin;
-            array[count++][1] = end;
-            
-            last_end = end;
-        }
-        else
-        {
-            if(end > last_end)
-            {    
-                array[count-1][1] =  end;
-                
-                last_end = end;
-            }
-            
-        }
-    }
-        
-    *returnSize = count;
-    return array;
+
+    // 令*ppca指向新malloc的指针数组
+    *ppca = pca;
 }
 

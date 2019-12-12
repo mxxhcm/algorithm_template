@@ -15,6 +15,4 @@ SearchTree Delete(ElementType X, SearchTree T);
 ElementType Retrieve(Positio P);
 
 
-
-
 #endif
